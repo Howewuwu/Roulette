@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		9C89CE862B4BF02C003BABEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89CE852B4BF02C003BABEB /* AppDelegate.swift */; };
 		9C89CE882B4BF02C003BABEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89CE872B4BF02C003BABEB /* SceneDelegate.swift */; };
-		9C89CE8A2B4BF02C003BABEB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89CE892B4BF02C003BABEB /* ViewController.swift */; };
-		9C89CE8D2B4BF02C003BABEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C89CE8B2B4BF02C003BABEB /* Main.storyboard */; };
 		9C89CE8F2B4BF02D003BABEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C89CE8E2B4BF02D003BABEB /* Assets.xcassets */; };
-		9C89CE922B4BF02D003BABEB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C89CE902B4BF02D003BABEB /* LaunchScreen.storyboard */; };
+		9C89CE9A2B4BF07F003BABEB /* RouletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89CE992B4BF07F003BABEB /* RouletteViewController.swift */; };
+		9C89CE9C2B4FA5F8003BABEB /* BetLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C89CE9B2B4FA5F8003BABEB /* BetLogic.swift */; };
+		9C89CEA02B5119F4003BABEB /* chipscasinobet.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9C89CE9F2B5119F4003BABEB /* chipscasinobet.wav */; };
+		9CAD2AA92B5BEB5600E148CA /* WheelImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAD2AA82B5BEB5600E148CA /* WheelImageView.swift */; };
+		9CAD2AAB2B5EA95500E148CA /* Digital Casino Short Roulette Spin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9CAD2AAA2B5EA95500E148CA /* Digital Casino Short Roulette Spin.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9C89CE822B4BF02C003BABEB /* Roulette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roulette.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C89CE852B4BF02C003BABEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C89CE872B4BF02C003BABEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9C89CE892B4BF02C003BABEB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		9C89CE8C2B4BF02C003BABEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9C89CE8E2B4BF02D003BABEB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9C89CE912B4BF02D003BABEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9C89CE932B4BF02D003BABEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C89CE992B4BF07F003BABEB /* RouletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouletteViewController.swift; sourceTree = "<group>"; };
+		9C89CE9B2B4FA5F8003BABEB /* BetLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetLogic.swift; sourceTree = "<group>"; };
+		9C89CE9F2B5119F4003BABEB /* chipscasinobet.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = chipscasinobet.wav; sourceTree = "<group>"; };
+		9CAD2AA82B5BEB5600E148CA /* WheelImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelImageView.swift; sourceTree = "<group>"; };
+		9CAD2AAA2B5EA95500E148CA /* Digital Casino Short Roulette Spin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Digital Casino Short Roulette Spin.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +62,13 @@
 			children = (
 				9C89CE852B4BF02C003BABEB /* AppDelegate.swift */,
 				9C89CE872B4BF02C003BABEB /* SceneDelegate.swift */,
-				9C89CE892B4BF02C003BABEB /* ViewController.swift */,
-				9C89CE8B2B4BF02C003BABEB /* Main.storyboard */,
+				9C89CE992B4BF07F003BABEB /* RouletteViewController.swift */,
 				9C89CE8E2B4BF02D003BABEB /* Assets.xcassets */,
-				9C89CE902B4BF02D003BABEB /* LaunchScreen.storyboard */,
 				9C89CE932B4BF02D003BABEB /* Info.plist */,
+				9C89CE9B2B4FA5F8003BABEB /* BetLogic.swift */,
+				9CAD2AA82B5BEB5600E148CA /* WheelImageView.swift */,
+				9C89CE9F2B5119F4003BABEB /* chipscasinobet.wav */,
+				9CAD2AAA2B5EA95500E148CA /* Digital Casino Short Roulette Spin.wav */,
 			);
 			path = Roulette;
 			sourceTree = "<group>";
@@ -125,9 +131,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C89CE922B4BF02D003BABEB /* LaunchScreen.storyboard in Resources */,
 				9C89CE8F2B4BF02D003BABEB /* Assets.xcassets in Resources */,
-				9C89CE8D2B4BF02C003BABEB /* Main.storyboard in Resources */,
+				9CAD2AAB2B5EA95500E148CA /* Digital Casino Short Roulette Spin.wav in Resources */,
+				9C89CEA02B5119F4003BABEB /* chipscasinobet.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,32 +144,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C89CE8A2B4BF02C003BABEB /* ViewController.swift in Sources */,
 				9C89CE862B4BF02C003BABEB /* AppDelegate.swift in Sources */,
 				9C89CE882B4BF02C003BABEB /* SceneDelegate.swift in Sources */,
+				9C89CE9C2B4FA5F8003BABEB /* BetLogic.swift in Sources */,
+				9C89CE9A2B4BF07F003BABEB /* RouletteViewController.swift in Sources */,
+				9CAD2AA92B5BEB5600E148CA /* WheelImageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		9C89CE8B2B4BF02C003BABEB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C89CE8C2B4BF02C003BABEB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9C89CE902B4BF02D003BABEB /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C89CE912B4BF02D003BABEB /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9C89CE942B4BF02D003BABEB /* Debug */ = {
@@ -296,10 +285,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Roulette/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = RouletteViewController;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,10 +313,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Roulette/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = RouletteViewController;
+				INFOPLIST_KEY_UIRequiresFullScreen = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

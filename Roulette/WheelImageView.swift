@@ -11,11 +11,11 @@ class WheelImageView: UIImageView {
     
     var currentValue: Double = 0
     
-    func rotateGradually(handler:@escaping (String) -> ()) {
+    func rotateGradually( handler: @escaping (String) -> () ) {
         
         var result = ""
         
-        let randomDouble = Double.random(in: 0..<2 * Double.pi) // 產生0~2pi隨機的Double數字,也就是0~360度。
+        let randomDouble = Double.random(in: 0..<2 * Double.pi)
         
         let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation")
         
@@ -23,12 +23,12 @@ class WheelImageView: UIImageView {
         
         rotateAnimation.fromValue = currentValue
         
-        currentValue = currentValue + 10 * Double.pi + randomDouble //開始到結束之,總共了5圈加上randomDouble度。
+        currentValue = currentValue + 10 * Double.pi + randomDouble
         
-        let value = currentValue.truncatingRemainder(dividingBy: Double.pi * 2) //取得currentale/Doublepi*2餘數
-        let degree = value * 180 / Double.pi //將弧度轉成角度
+        let value = currentValue.truncatingRemainder(dividingBy: Double.pi * 2)
+        let degree = value * 180 / Double.pi
         
-        switch degree{ //依照不同角度判斷轉到區塊
+        switch degree {
         case 0..<9.72:
             result="26"
         case 9.72..<19.44:
@@ -103,28 +103,30 @@ class WheelImageView: UIImageView {
             result="32"
         case 349.92..<359.64:
             result="0"
-            
         default:
-            result="...未知的區域"
+            result="未知的區域"
         }
         
         rotateAnimation.toValue = currentValue
-        rotateAnimation.isRemovedOnCompletion = false //動畫結束後仍保在結束狀態,讓轉盤不會在動畫結束時回到最初狀態。便繼再次轉動。
+        rotateAnimation.isRemovedOnCompletion = false
         rotateAnimation.fillMode = .forwards
-        rotateAnimation.duration = 4 //動畫持續時間
-        rotateAnimation.repeatCount = 1 // 重複幾次
+        rotateAnimation.duration = 4
+        rotateAnimation.repeatCount = 1
         
-        CATransaction.setCompletionBlock { //跑完動後要做的事
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3){//動畫結束後暫停0.3秒
+        rotateAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0, 0.9, 0.4, 1.00)//用cubic Bezier curve決定動畫速率曲線
+        
+        self.layer.add(rotateAnimation, forKey: "rotationAnimation")
+        
+        
+        CATransaction.setCompletionBlock {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 handler(result)
             }
         }
         
-        rotateAnimation.timingFunction = CAMediaTimingFunction(controlPoints: 0, 0.9, 0.4, 1.00)//用cubic Bezier curve決定動畫速率曲線
-        //也可以用內建的easeOut,但我想要最後轉一點
         
-        self.layer.add(rotateAnimation, forKey: nil)
         CATransaction.commit()
+        
     }
     
     
