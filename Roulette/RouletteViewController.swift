@@ -70,6 +70,8 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     var theLastBets = [Bet]()
     
+//    var chipArray = [Chip]()
+//    var chipValue: Chip?
     
     
     // MARK: - viewDidLoad Section
@@ -726,9 +728,13 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         
         if player.totalChips > 0 && player.totalChips >= selectChipValue {
             
-            let bet = Bet(type: betType, chips: [Chip(value: selectChipValue)])
-            player.placeBet(bet)
+//            chipValue = Chip(value: selectChipValue)
+//            chipArray.append(chipValue!)
             
+            let bet = Bet(type: betType, chips: [Chip(value: selectChipValue)])
+//            let bet = Bet(type: betType, chips: chipArray)
+            player.placeBet(bet)
+//            print("chips count \(bet.chips.count) ")
             let currentBet = player.bets.filter { $0 .type == betType}
             singleBetChip = currentBet.reduce(0) { $0 + $1.totalAmount }
             
@@ -1222,7 +1228,6 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             sender.transform = CGAffineTransform.identity
         }
         
-        // 還需要呈現 UI 部分, 按鈕陣列？
         theLastBets.forEach { Bet in
             
             
