@@ -57,8 +57,29 @@ class Chip {
     
     var value: Int
     
+    var chipImage: UIImage?
+    
+    
+    
     init(value: Int) {
         self.value = value
+        switch value {
+        case 5 :
+            chipImage = UIImage(named: "Chip5")
+        case 10 :
+            chipImage = UIImage(named: "Chip10")
+        case 15 :
+            chipImage = UIImage(named: "Chip15")
+        case 20 :
+            chipImage = UIImage(named: "Chip20")
+        case 25 :
+            chipImage = UIImage(named: "Chip25")
+        case 50 :
+            chipImage = UIImage(named: "Chip50")
+        default :
+            chipImage = UIImage(named: "Allin")
+            
+        }
     }
 }
 

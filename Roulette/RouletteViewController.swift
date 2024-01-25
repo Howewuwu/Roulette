@@ -52,7 +52,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
     let reBetButton = UIButton()
     let spinButton = UIButton()
     
-    var betButtonZeros = [UIButton]()
+    //    var betButtonZeros = [UIButton]()
     var betButtonRightSides = [UIButton]()
     var betButtonLeftSides = [UIButton]()
     var betButton2To1Sides = [UIButton]()
@@ -70,8 +70,16 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     var theLastBets = [Bet]()
     
-//    var chipArray = [Chip]()
-//    var chipValue: Chip?
+    
+    var resultNumbers = [Int]() {
+        didSet {
+            // 將數字放前面？
+        }
+    }
+    
+    let displayContainerView = UIView()
+    var displayLabel = UILabel()
+    
     
     
     // MARK: - viewDidLoad Section
@@ -81,6 +89,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         
         setupInitialUI()
         setupChipPicker()
+        setupDisplayResult()
         
         NotificationCenter.default.addObserver(self, selector: #selector(totalChipsDidChange), name: .totalChipsDidChange, object: nil)
         
@@ -119,7 +128,8 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         betButtonZero.tag = 0
         betButtonZero.addTarget(self, action: #selector(betButtonZeroTouched), for: .touchDown)
         betButtonZero.addTarget(self, action: #selector(betButtonZeroReleased), for: .touchUpInside)
-        betButtonZeros.append(betButtonZero)
+        //        betButtonZeros.append(betButtonZero)
+        betButtonINTs.append(betButtonZero)
         
         rightSideStackView.axis = .vertical
         rightSideStackView.spacing = 0
@@ -625,6 +635,73 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     
     
+    // MARK: - Display ResultNumber Function Section
+    func setupDisplayResult() {
+        
+        
+        displayContainerView.translatesAutoresizingMaskIntoConstraints = false
+        displayLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        displayContainerView.backgroundColor = .gray
+        displayContainerView.layer.cornerRadius = 20
+        displayContainerView.layer.borderWidth = 1
+        displayContainerView.layer.borderColor = UIColor.white.cgColor
+        
+        displayLabel.text = ""
+        displayLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        displayLabel.textAlignment = .center
+        displayLabel.numberOfLines = 0
+        displayLabel.textColor = .white
+        displayLabel.adjustsFontSizeToFitWidth = true
+        
+        view.addSubview(displayContainerView)
+        displayContainerView.addSubview(displayLabel)
+        
+        NSLayoutConstraint.activate([
+            
+            displayContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            displayContainerView.leadingAnchor.constraint(equalTo: mainContainerView.trailingAnchor, constant: 10),
+            displayContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            displayContainerView.bottomAnchor.constraint(equalTo: reBetButton.topAnchor, constant: -20),
+            
+            displayLabel.centerXAnchor.constraint(equalTo: displayContainerView.centerXAnchor),
+            displayLabel.topAnchor.constraint(equalTo: displayContainerView.topAnchor, constant: 8)
+            
+        ])
+        
+    }
+    
+    
+    
+    func displayResultNumber(resultNumber: Int) {
+        
+        resultNumbers.append(resultNumber)
+
+        if resultNumbers.count > 11 {
+            resultNumbers.removeFirst()
+        }
+
+        let attributedString = NSMutableAttributedString()
+        
+        for number in resultNumbers.reversed() {
+            
+            let color: UIColor
+            
+            if number == 0 {
+                color = .systemGreen
+            } else {
+                color = redNumbers.contains(number) ? .systemRed : .black
+            }
+            
+            let numberString = NSAttributedString(string: "\(number)\n", attributes: [NSAttributedString.Key.foregroundColor: color])
+            attributedString.append(numberString)
+        }
+
+        displayLabel.attributedText = attributedString
+    }
+    
+
+    
     // MARK: - UIPicker Function Section
     func setupChipPicker() {
         
@@ -728,13 +805,12 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         
         if player.totalChips > 0 && player.totalChips >= selectChipValue {
             
-//            chipValue = Chip(value: selectChipValue)
-//            chipArray.append(chipValue!)
+            
             
             let bet = Bet(type: betType, chips: [Chip(value: selectChipValue)])
-//            let bet = Bet(type: betType, chips: chipArray)
+            
             player.placeBet(bet)
-//            print("chips count \(bet.chips.count) ")
+            
             let currentBet = player.bets.filter { $0 .type == betType}
             singleBetChip = currentBet.reduce(0) { $0 + $1.totalAmount }
             
@@ -785,9 +861,9 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         totalBetMoneyLabel.text = "  BET TOTAL MONEY: $ \(totalBetAmount)  "
         totalMoneyLabel.text = "  TOTAL MONEY: $ \(player.totalChips)  "
         
-        for i in betButtonZeros {
-            i.setImage(nil, for: .normal)
-        }
+        //        for i in betButtonZeros {
+        //            i.setImage(nil, for: .normal)
+        //        }
         
         
         for i in betButtonRightSides {
@@ -825,7 +901,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         }
         
         NotificationCenter.default.post(name: .totalChipsDidChange, object: nil)
-
+        
     }
     
     
@@ -834,10 +910,10 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         guard times > 0 else {
             return
         }
-
+        
         // 創建動畫
         let animator = UIViewPropertyAnimator(duration: duration, curve: .easeOut)
-
+        
         // 動畫內容：改變背景顏色
         animator.addAnimations {
             
@@ -851,14 +927,14 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             else if view.backgroundColor == .systemMint { view.backgroundColor = .systemRed }
             
         }
-
+        
         // 當動畫結束時，檢查是否需要重新啟動動畫
         animator.addCompletion { position in
             if position == .end {
                 self.addColorBlinkingEffect(to: view, duration: duration, times: times - 1)
             }
         }
-
+        
         // 開始動畫
         animator.startAnimation()
     }
@@ -912,11 +988,56 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         }
         
     }
-
     
     
     
-    
+    func reBatPlaceBetButtonSetting(bet: Bet, betType: BetType, sender: UIButton) {
+        
+        if player.totalChips > 0 && player.totalChips >= bet.totalAmount {
+            
+            
+            
+            player.placeBet(bet)
+            
+            //            let currentBet = player.bets.filter { $0 .type == betType}
+            //            singleBetChip = currentBet.reduce(0) { $0 + $1.totalAmount }
+            //
+            //            singleBetAmountLabel.text = "\(singleBetChip)"
+            
+            sender.setImage(bet.chips[0].chipImage, for: .normal)
+            
+            totalBetAmount = player.bets.reduce(0) { $0 + $1.totalAmount}
+            totalBetMoneyLabel.text = "  BET TOTAL MONEY: $ \(totalBetAmount)  "
+            
+            totalMoneyLabel.text = "  TOTAL MONEY: $ \(player.totalChips)  "
+            
+            createSFX(sfxUrl: chipSfxUrl!)
+            
+        } else {
+            singleBetAmountLabel.text = "籌碼不足"
+        }
+        
+        //        singleBetAmountLabel.textColor = .white
+        //        singleBetAmountLabel.textAlignment = .center
+        //        singleBetAmountLabel.backgroundColor = .gray
+        //        singleBetAmountLabel.adjustsFontSizeToFitWidth = true
+        //        singleBetAmountLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        //        singleBetAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+        //
+        //        view.addSubview(singleBetAmountLabel)
+        //
+        //        NSLayoutConstraint.activate([
+        //            singleBetAmountLabel.centerXAnchor.constraint(equalTo: sender.centerXAnchor),
+        //            singleBetAmountLabel.bottomAnchor.constraint(equalTo: sender.topAnchor, constant: -5),
+        //            singleBetAmountLabel.widthAnchor.constraint(equalTo: sender.widthAnchor, multiplier: 1),
+        //            singleBetAmountLabel.heightAnchor.constraint(equalTo: sender.heightAnchor, multiplier: 1)
+        //        ])
+        //
+        //        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { Timer in
+        //            self.singleBetAmountLabel.removeFromSuperview()
+        //        }
+        
+    }
     
     
     
@@ -1227,6 +1348,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
         UIView.animate(withDuration: 0.3) {
             sender.transform = CGAffineTransform.identity
         }
+        removeBet()
         
         theLastBets.forEach { Bet in
             
@@ -1234,72 +1356,89 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             switch Bet.type {
             case .number(let betNumber):
                 let betButtonINT = betButtonINTs.first { $0.tag == betNumber }
-                placeBetButtonSetting(betType: .number(betNumber), sender: betButtonINT!)
-     
+                //                placeBetButtonSetting(betType: .number(betNumber), sender: betButtonINT!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .number(betNumber), sender: betButtonINT!)
+                
             case .firstTwelve:
                 let betButtonRightSide1 = betButtonRightSides.first { $0.tag == 1 }
-                placeBetButtonSetting(betType: .firstTwelve, sender: betButtonRightSide1!)
+                //                placeBetButtonSetting(betType: .firstTwelve, sender: betButtonRightSide1!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .firstTwelve, sender: betButtonRightSide1!)
                 
             case .secondTwelve:
                 let betButtonRightSide2 = betButtonRightSides.first { $0.tag == 2 }
-                placeBetButtonSetting(betType: .secondTwelve, sender: betButtonRightSide2!)
+                //                placeBetButtonSetting(betType: .secondTwelve, sender: betButtonRightSide2!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .secondTwelve, sender: betButtonRightSide2!)
                 
             case .thirdTwelve:
                 let betButtonRightSide3 = betButtonRightSides.first { $0.tag == 3 }
-                placeBetButtonSetting(betType: .thirdTwelve, sender: betButtonRightSide3!)
+                //                placeBetButtonSetting(betType: .thirdTwelve, sender: betButtonRightSide3!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .thirdTwelve, sender: betButtonRightSide3!)
                 
             case .red:
                 let betButtonLeftSide3 = betButtonLeftSides.first { $0.tag == 3 }
-                placeBetButtonSetting(betType: .red, sender: betButtonLeftSide3!)
+                //                placeBetButtonSetting(betType: .red, sender: betButtonLeftSide3!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .red, sender: betButtonLeftSide3!)
                 
             case .black:
                 let betButtonLeftSide4 = betButtonLeftSides.first { $0.tag == 4 }
-                placeBetButtonSetting(betType: .black, sender: betButtonLeftSide4!)
+                //                placeBetButtonSetting(betType: .black, sender: betButtonLeftSide4!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .black, sender: betButtonLeftSide4!)
                 
             case .odd:
                 let betButtonLeftSide5 = betButtonLeftSides.first { $0.tag == 5 }
-                placeBetButtonSetting(betType: .odd, sender: betButtonLeftSide5!)
+                //                placeBetButtonSetting(betType: .odd, sender: betButtonLeftSide5!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .odd, sender: betButtonLeftSide5!)
                 
             case .even:
                 let betButtonLeftSide2 = betButtonLeftSides.first { $0.tag == 2 }
-                placeBetButtonSetting(betType: .even, sender: betButtonLeftSide2!)
+                //                placeBetButtonSetting(betType: .even, sender: betButtonLeftSide2!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .even, sender: betButtonLeftSide2!)
                 
             case .firstHalf:
                 let betButtonLeftSide1 = betButtonLeftSides.first { $0.tag == 1 }
-                placeBetButtonSetting(betType: .firstHalf, sender: betButtonLeftSide1!)
+                //                placeBetButtonSetting(betType: .firstHalf, sender: betButtonLeftSide1!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .firstHalf, sender: betButtonLeftSide1!)
                 
             case .secondHalf:
                 let betButtonLeftSide6 = betButtonLeftSides.first { $0.tag == 6 }
-                placeBetButtonSetting(betType: .secondHalf, sender: betButtonLeftSide6!)
+                //                placeBetButtonSetting(betType: .secondHalf, sender: betButtonLeftSide6!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .secondHalf, sender: betButtonLeftSide6!)
                 
             case .firstColumn:
                 let betButton2To1ST = betButton2To1Sides.first { $0.tag == 1 }
-                placeBetButtonSetting(betType: .firstColumn, sender: betButton2To1ST!)
+                //                placeBetButtonSetting(betType: .firstColumn, sender: betButton2To1ST!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .firstColumn, sender: betButton2To1ST!)
                 
             case .secondColumn:
                 let betButton2To1ND = betButton2To1Sides.first { $0.tag == 2 }
-                placeBetButtonSetting(betType: .secondColumn, sender: betButton2To1ND!)
+                //                placeBetButtonSetting(betType: .secondColumn, sender: betButton2To1ND!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .secondColumn, sender: betButton2To1ND!)
                 
             case .thirdColumn:
-                let betButton2To1RD = betButton2To1Sides.first { $0.tag == 2 }
-                placeBetButtonSetting(betType: .thirdColumn, sender: betButton2To1RD!)
+                let betButton2To1RD = betButton2To1Sides.first { $0.tag == 3 }
+                //                placeBetButtonSetting(betType: .thirdColumn, sender: betButton2To1RD!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .thirdColumn, sender: betButton2To1RD!)
                 
             case .split(let numbers):
                 if numbers[1] == 0 || numbers[1] - numbers[0] == 3 {
                     let betButtonUpSpilt = betButtonUpSplits.first { $0.tag == numbers[0] }
-                    placeBetButtonSetting(betType: .split([numbers[0], numbers[1]]), sender: betButtonUpSpilt!)
+                    //                    placeBetButtonSetting(betType: .split([numbers[0], numbers[1]]), sender: betButtonUpSpilt!)
+                    reBatPlaceBetButtonSetting(bet: Bet, betType: .split([numbers[0], numbers[1]]), sender: betButtonUpSpilt!)
                 } else if numbers[0] - numbers[1] == 1 {
                     let betButtonLeftSpilt = betButtonSpiltOrStreets.first { $0.tag == numbers[0] }
-                    placeBetButtonSetting(betType: .split([numbers[0], numbers[1]]), sender: betButtonLeftSpilt!)
+                    //                    placeBetButtonSetting(betType: .split([numbers[0], numbers[1]]), sender: betButtonLeftSpilt!)
+                    reBatPlaceBetButtonSetting(bet: Bet, betType: .split([numbers[0], numbers[1]]), sender: betButtonLeftSpilt!)
                 }
                 
             case .street(let number):
                 let betButtonStreet = betButtonSpiltOrStreets.first { $0.tag == number }
-                placeBetButtonSetting(betType: .street(number), sender: betButtonStreet!)
-               
+                //                placeBetButtonSetting(betType: .street(number), sender: betButtonStreet!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .street(number), sender: betButtonStreet!)
+                
             case .corner(let numbers):
                 let betButtonCorner = betButtonCorners.first { $0.tag == numbers[0] }
-                placeBetButtonSetting(betType: .corner([numbers[0], numbers[1], numbers[2], numbers[3]]), sender: betButtonCorner!)
+                //                placeBetButtonSetting(betType: .corner([numbers[0], numbers[1], numbers[2], numbers[3]]), sender: betButtonCorner!)
+                reBatPlaceBetButtonSetting(bet: Bet, betType: .corner([numbers[0], numbers[1], numbers[2], numbers[3]]), sender: betButtonCorner!)
                 
             }
             
@@ -1377,7 +1516,15 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             resultNumber = Int(result)!
             
             
-            Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { Timer in
+            Timer.scheduledTimer(withTimeInterval: 4, repeats: false) { [self] Timer in
+                
+                if redNumbers.contains(resultNumber) {
+                    resultLabel.textColor = .systemRed
+                } else if blackNumbers.contains(resultNumber) {
+                    resultLabel.textColor = .black
+                } else if resultNumber == 0 {
+                    resultLabel.textColor = .white
+                }
                 self.resultLabel.text = result
             }
             
@@ -1427,6 +1574,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             
             Timer.scheduledTimer(withTimeInterval: 11, repeats: false) { Timer in
                 self.checkFinalLabel.text = ""
+                self.displayResultNumber(resultNumber: self.resultNumber)
             }
             
             
@@ -1444,7 +1592,7 @@ class RouletteViewController: UIViewController, UIPickerViewDataSource, UIPicker
             // 這裡可以加上其他更新 UI 的代碼
         }
     }
-
+    
     
     
     
